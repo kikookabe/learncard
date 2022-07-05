@@ -15,5 +15,11 @@
   <%= @task.end_date %>
 </p>
 
+<p>
+  <strong>学習時間(時間):</strong>
+  <%= (@task.end_date - @task.start_date).floor / 3600 %>
+</p>
+
 <%= link_to '編集', edit_task_path(@task) %> |
 <%= link_to '戻る', tasks_path %>
+

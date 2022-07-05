@@ -21,11 +21,12 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
+    @task.start_date = Time.new
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to task_url(@task), notice: "Task was successfully created." }
+        format.html { redirect_to endtime_task_url(@task), notice: "Task was successfully created." }
         format.json { render :show, status: :created, location: @task }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,7 +38,7 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
     respond_to do |format|
-      if @task.update(task_params)
+      if @task.update(end_date: Time.new)
         format.html { redirect_to task_url(@task), notice: "Task was successfully updated." }
         format.json { render :show, status: :ok, location: @task }
       else
@@ -57,6 +58,11 @@ class TasksController < ApplicationController
     end
   end
 
+  def endtime
+    @task = current_user.tasks.find(params[:id])
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
@@ -65,6 +71,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :start_date, :end_date).merge(user_id: current_user.id)
+      params.require(:task).permit(:title, :start_date, :end_date)#.merge(user_id: current_user.id, totaltime: (@task.end_date - @task.start_date).floor / 3600)
     end
 end
