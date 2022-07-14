@@ -14,7 +14,9 @@
       <%= content_tag(:div, value, class: "#{key}") %>
     <% end %>
     <% if logged_in? %>
+      <% if current_user.admin == false %>
       <%= link_to "ユーザ画面", user_path(current_user.id) %>
+      <% end %>
       <%= link_to "ログアウト", session_path(current_user.id), method: :delete %>
     <% else %>
       <%= link_to "新規ユーザー登録", new_user_path %>

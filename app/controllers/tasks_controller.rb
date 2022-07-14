@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_task, only: %i[ show edit update destroy overwrite ]
 
   # GET /tasks or /tasks.json
   def index
@@ -39,8 +39,8 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update(end_date: Time.new)
-        format.html { redirect_to task_url(@task), notice: "Task was successfully updated." }
-        format.json { render :show, status: :ok, location: @task }
+        format.html { redirect_to comment_task_url(id: @task.id), notice: "Task was successfully updated." }
+        format.json { render :comment, status: :ok, location: @task }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @task.errors, status: :unprocessable_entity }
@@ -62,15 +62,51 @@ class TasksController < ApplicationController
     @task = current_user.tasks.find(params[:id])
   end
 
+  def comment
+    @task = current_user.tasks.find(params[:id])
+  end
+
+  def write
+    @task = current_user.tasks.find(params[:id])
+    respond_to do |format|
+      if @task.update(comment: params[:task][:comment])
+        format.html { redirect_to task_url(@task), notice: "Task was successfully updated." }
+        format.json { render :show, status: :ok, location: @task }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def overwrite
+    respond_to do |format|
+      if @task.update(task_params)
+        if current_user.admin == false
+          format.html { redirect_to task_url(@task), notice: "Task was successfully updated." }
+          format.json { render :show, status: :ok, location: @task }
+        else
+          format.html { redirect_to admin_users_url, notice: "毎日見て応援しましょう" }
+        end
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
-      @task = current_user.tasks.find(params[:id])
+      if current_user.admin == false
+        @task = current_user.tasks.find(params[:id])
+      else
+        @task = Task.find(params[:id])
+      end
     end
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :start_date, :end_date)#.merge(user_id: current_user.id, totaltime: (@task.end_date - @task.start_date).floor / 3600)
+      params.require(:task).permit(:title, :start_date, :end_date, :comment, :advise)#.merge(user_id: current_user.id, totaltime: (@task.end_date - @task.start_date).floor / 3600)
     end
 end

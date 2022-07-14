@@ -7,9 +7,15 @@
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.3.0",
     "admin-lte": "^3.0",
+    "rails_admin": "3.0.0",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
+
+  "engines": {
+    "node": "14.19.1"
+  },
+
   "devDependencies": {
     "webpack-dev-server": "^4.9.1"
   }

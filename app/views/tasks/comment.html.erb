@@ -1,0 +1,28 @@
+<h1>新規学習</h1>
+
+    <% if @task.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+  
+        <ul>
+          <% @task.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with(model: @task, url: write_task_path, local: true) do |form| %>
+
+<div class="field">
+    <%= form.label :コメント %>
+    <%= form.text_field :comment %>
+</div>
+
+<div class="actions">
+    <%= form.submit "コメント" %>
+  </div>
+
+<% end %>
+
+<%= link_to '戻る', tasks_path %>

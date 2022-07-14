@@ -1,6 +1,64 @@
 <h1>編集</h1>
 
-<%= render 'form', task: @task %>
+<%= form_with(model: @task, local: true, url: overwrite_task_path, method: :put) do |form| %>
+    <% if @task.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+  
+        <ul>
+          <% task.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  
+    <% if current_user.admin == false %>
 
-<%= link_to '詳細', @task %> |
-<%= link_to '戻る', tasks_path %>
+        <div class="field">
+          <%= form.label :学習内容 %>
+          <%= form.text_field :title %>
+         </div>
+  
+        <div class="field">
+            <%= form.label :コメント %>
+            <%= form.text_field :comment %>
+        </div>
+
+        <div class="field">
+            <%= form.label :開始時刻 %>
+            <%= form.datetime_select :start_date %>
+        </div>
+
+        <div class="field">
+            <%= form.label :終了時刻 %>
+            <%= form.datetime_select :end_date %>
+        </div>
+
+        <div class="actions">
+            <%= form.submit "編集" %>
+        </div>
+
+    <% else %>
+        <div class="field">
+          <%= form.label :ひとこと %>
+          <%= form.text_field :advise %>
+        </div>
+
+        <div class="actions">
+            <%= form.submit "応援する" %>
+        </div>
+
+    <% end %>
+  
+<% end %>
+
+
+
+<% if current_user.admin == false %>
+    <%= link_to '詳細', @task %> |
+    <%= link_to '戻る', tasks_path %>
+<% else %>
+    <%= link_to '戻る', admin_users_path %>
+<% end %>
+

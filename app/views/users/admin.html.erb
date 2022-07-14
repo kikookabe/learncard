@@ -1,0 +1,48 @@
+<h1>学習履歴</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>学習内容</th>
+      <th>ユーザ</th>
+      <th>開始時刻</th>
+      <th>終了時刻</th>
+      <th>学習時間（分）</th>
+      <th>コメント</th>
+      <th>ひとこと</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.title %></td>
+        <td><%= task.user.name %></td>
+        <td><%= task.start_date.to_s(:datetime_jp) %></td>
+
+        <td><% if task.end_date.present? %>
+        <%= task.end_date.to_s(:datetime_jp) %>
+        <% end %></td>
+
+        <td><% if task.end_date.present? %>
+        <%= (task.end_date - task.start_date).floor / 60 %>
+        <% end %></td>
+
+        <td><%= task.comment %></td>
+
+        <td><% if task.advise.present? %>
+        <%= task.advise %>
+        <% end %></td>
+
+        <td><%= link_to '応援する', edit_task_path(task) %></td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+
+
