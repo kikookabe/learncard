@@ -18,15 +18,14 @@ https://docs.google.com/spreadsheets/d/1_ifhr2nqG7N1BeFsVYbs-b9zIkSzQdk7uSE2y3It
 https://docs.google.com/spreadsheets/d/1_ifhr2nqG7N1BeFsVYbs-b9zIkSzQdk7uSE2y3Itrbo/edit?usp=sharing
 
 # ワイヤーフレーム
-https://cacoo.com/diagrams/GHwAiJJAnwO3BQxR/21DFE
+https://cacoo.com/diagrams/rdwtMlfulexTb3O0/1C20E
 
 # ER図
-![ER図_learncard](https://user-images.githubusercontent.com/103089831/172126158-91738b55-bc67-412d-9b68-44cb37412415.png)
+![ER図_learncard](https://user-images.githubusercontent.com/103089831/179189343-e50324fb-fa0a-4fae-bf2b-9bbd1eabf275.png)
 
 
 # 画面遷移図
-![画面遷移図_learncard](https://user-images.githubusercontent.com/103089831/172126296-3bbf2fb8-c1e8-4a83-9a78-a57862c20b93.png)
-
+![画面遷移図_learncard](https://user-images.githubusercontent.com/103089831/179189569-b796e5b9-a45a-48b5-97e4-90ffb6f75090.png)
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
